@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Software Review Sheet</title>
+  <meta name="description" content="An interactive sheet for writing a software (code) review of a mathematical paper. Fill it in, save it, and download it as PDF or LaTeX.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      startup: { typeset: false }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="home-link" href="index.html" title="Software review sheet">
+      <img src="mardi-mark.png" alt="" class="topbar-logo">
+      <span class="home-text"><span class="home-sub">Software review sheet</span></span>
+    </a>
+
+    <div class="view-switch" role="tablist" aria-label="View">
+      <button role="tab" id="tab-edit" aria-selected="true" aria-controls="editor" data-view="edit">Edit</button>
+      <button role="tab" id="tab-preview" aria-selected="false" aria-controls="preview" data-view="preview">Preview</button>
+    </div>
+
+    <div class="actions">
+      <a class="guide-link" href="guide.html">How to review</a>
+      <span class="save-status" id="save-status" aria-live="polite"></span>
+      <div class="menu">
+        <button class="btn btn-ghost" id="btn-file" aria-haspopup="true" aria-expanded="false">File <span class="caret" aria-hidden="true"></span></button>
+        <div class="menu-pop" id="menu-file" role="menu" hidden>
+          <button role="menuitem" data-action="new">New review</button>
+          <button role="menuitem" data-action="open">Open saved review…</button>
+          <button role="menuitem" data-action="save">Save review to file (.json)</button>
+          <hr>
+          <button role="menuitem" data-action="example">Load the example review</button>
+        </div>
+      </div>
+      <button class="btn btn-ghost" data-action="latex" title="Download a LaTeX project (works directly on Overleaf)">LaTeX</button>
+      <button class="btn btn-primary" data-action="pdf">Download PDF</button>
+    </div>
+  </div>
+  <input type="file" id="file-input" accept=".json,.tex,application/json" hidden>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" aria-label="Parts of the review">
+    <div class="sidebar-inner">
+      <p class="sidebar-title">Parts of the review</p>
+      <ol class="toc" id="toc"></ol>
+      <div class="sidebar-foot">
+        <a href="https://doi.org/10.1090/noti3210" target="_blank" rel="noopener" class="paper-link">
+          <span class="paper-kicker">Based on</span>
+          Guidelines for Writing and Reviewing Mathematical Software
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <!-- ================= EDITOR ================= -->
+    <div id="editor" role="tabpanel" aria-labelledby="tab-edit">
+      <section class="intro card">
+        <h1>Write a software review</h1>
+        <p class="lede">A guided version of the <a href="https://github.com/JHanselman/code-review-template" target="_blank" rel="noopener">MaRDI code review template</a> for reviewing the software that comes with a mathematical paper. No LaTeX needed.</p>
+        <ol class="howto">
+          <li><b>Fill in the parts below.</b> Click any <span class="knowl-demo">dotted label</span> to see what the guidelines say about it.</li>
+          <li><b>Your work is kept in this browser</b> automatically. Use <i>File&nbsp;→ Save</i> to keep a copy or move it to another computer.</li>
+          <li><b>Download the result</b> as a PDF, or as a LaTeX project you can open on Overleaf.</li>
+        </ol>
+        <p class="intro-links">
+          <button type="button" class="knowl" data-knowl="start">How to approach a software review</button>
+          <button type="button" class="knowl" data-knowl="formatting_help">Formatting your text</button>
+          <a href="guide.html">Guide: how to perform a software review</a>
+        </p>
+        <p class="privacy">Nothing you type is sent anywhere: the sheet runs entirely in your browser.</p>
+      </section>
+
+      <form id="review-form" autocomplete="off" novalidate></form>
+
+      <div class="done card">
+        <h2>Finished?</h2>
+        <p>Check the <button type="button" class="linklike" data-view="preview">preview</button>, then download your review.</p>
+        <div class="done-actions">
+          <button type="button" class="btn btn-primary" data-action="pdf">Download PDF</button>
+          <button type="button" class="btn btn-ghost" data-action="latex">Download LaTeX project</button>
+          <button type="button" class="btn btn-ghost" data-action="save">Save review (.json)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PREVIEW ================= -->
+    <div id="preview" role="tabpanel" aria-labelledby="tab-preview" hidden>
+      <div class="preview-bar">
+        <p>This is how the PDF will look.</p>
+        <button type="button" class="btn btn-primary" data-action="pdf">Download PDF</button>
+      </div>
+      <article class="sheet" id="sheet"></article>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<footer class="site-footer">
+  <p>Made by Jeroen Hanselman as part of <a href="https://www.mardi4nfdi.de" target="_blank" rel="noopener">MaRDI</a> (Mathematical Research Data Initiative).
+  Based on the <a href="https://github.com/JHanselman/code-review-template" target="_blank" rel="noopener">code review template</a>
+  and the article <a href="https://doi.org/10.1090/noti3210" target="_blank" rel="noopener"><i>Guidelines for Writing and Reviewing Mathematical Software</i></a>.</p>
+</footer>
+
+<script src="knowls.js"></script>
+<script src="review.js"></script>
+</body>
+</html>

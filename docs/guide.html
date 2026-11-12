@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!--
+  How to perform a software review: practical guide accompanying the interactive review sheet (index.html).
+  Draft: sections 1-5 summarise practicalities; sections 6-7 are guidelines on AI use, which are not
+  covered in the original paper. Edit freely.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Review Software</title>
+  <meta name="description" content="A practical guide to reviewing the software that accompanies a mathematical paper, including guidelines for using AI in a review.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="review.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="home-link" href="index.html" title="Software review sheet">
+      <img src="mardi-mark.png" alt="" class="topbar-logo">
+      <span class="home-text"><span class="home-sub">How to perform a software review</span></span>
+    </a>
+    <div class="actions" style="margin-left:auto">
+      <a class="btn btn-primary" href="index.html">Open the review sheet</a>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" aria-label="Contents">
+    <div class="sidebar-inner">
+      <p class="sidebar-title">Contents</p>
+      <ol class="toc">
+        <li><a href="#before"><span class="toc-num">1</span><span class="toc-title">Before you start</span></a></li>
+        <li><a href="#workflow"><span class="toc-num">2</span><span class="toc-title">The review, step by step</span></a></li>
+        <li><a href="#correctness"><span class="toc-num">3</span><span class="toc-title">What kind of correctness?</span></a></li>
+        <li><a href="#safety"><span class="toc-num">4</span><span class="toc-title">Running someone else's code safely</span></a></li>
+        <li><a href="#writing"><span class="toc-num">5</span><span class="toc-title">Writing up the review</span></a></li>
+        <li><a href="#ai-reviewers"><span class="toc-num">6</span><span class="toc-title">Using AI as a reviewer</span></a></li>
+        <li><a href="#ai-authors"><span class="toc-num">7</span><span class="toc-title">AI use by the authors</span></a></li>
+      </ol>
+      <div class="sidebar-foot">
+        <a href="https://doi.org/10.1090/noti3210" target="_blank" rel="noopener" class="paper-link">
+          <span class="paper-kicker">Background</span>
+          Guidelines for Writing and Reviewing Mathematical Software
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <section class="card prose">
+      <h1>How to perform a software review</h1>
+      <p>Many mathematical papers now rely on code: to compute examples, to build databases, or as part of a proof.
+      A software review checks that this code can be found, installed and run, and that it supports what the paper claims.
+      This page is a practical companion to the <a href="index.html">review sheet</a> and to the article
+      <a href="https://doi.org/10.1090/noti3210" target="_blank" rel="noopener"><i>Guidelines for Writing and Reviewing Mathematical Software</i></a>.</p>
+      <div class="callout">
+        <p><b>The short version.</b> Your main job is <b>reproducibility</b>, not checking the mathematics.
+        Could an average user find the software, install it, run it, and check that the results are what the authors claim?
+        Write down what you did, so the authors can follow your steps.</p>
+      </div>
+    </section>
+
+    <section class="card prose" id="before">
+      <span class="section-num">Section 1</span>
+      <h2>Before you start</h2>
+      <h3>What you are (and are not) asked to do</h3>
+      <ul>
+        <li>You should be comfortable with the programming languages involved and broadly familiar with the field, but you do not need to be an expert on the topic of the paper.</li>
+        <li>You are not expected to check every line of code, nor to find every bug. The aim is to <b>increase confidence</b> in the results and to make sure others can <b>reproduce</b> them.</li>
+        <li>It is not your task to debug the authors' code. A quick fix is fine if the problem is obvious, as long as you report it.</li>
+      </ul>
+      <h3>Set yourself a time budget</h3>
+      <p>Decide in advance how much time you will spend, for example an afternoon. If the installation is still failing when the time is up,
+      that is a result in itself: stop, and report exactly where you got stuck. A review that says "I could not install this, and here is why" is valuable to the authors.</p>
+      <h3>Licences for closed-source software</h3>
+      <p>Code written for Magma, Maple or Mathematica can only be run with a licence. If you do not have one, tell the editor or organisers early;
+      they may be able to find another reviewer. If you review the code anyway, say clearly in the review that you could not run it, so that "not tested" is not mistaken for "does not work".</p>
+      <h3>Anonymity</h3>
+      <p>Software reviews are hard to make anonymous. A repository usually reveals who the authors are, and opening an issue or pull request on it reveals who you are.
+      Communicate through the editor unless you are happy for the authors to know who you are.</p>
+    </section>
+
+    <section class="card prose" id="workflow">
+      <span class="section-num">Section 2</span>
+      <h2>The review, step by step</h2>
+      <ol>
+        <li><b>Read the abstract and introduction, and skim the paper.</b> What role does the code play: a new algorithm, a faster one, a database, examples, part of a proof?
+          <span class="sheet-ref">→ <a href="index.html#part-role">sheet, part 5</a></span></li>
+        <li><b>Make a list of the claims that depend on code.</b> For each theorem, example or table: which file produces it, what output do you expect, and how long should it take?
+          If the authors provide such a list, even better.</li>
+        <li><b>Scan the repository.</b> License, hosting, Readme, documentation, and what files there are.
+          <span class="sheet-ref">→ <a href="index.html#part-files">parts 2</a> and <a href="index.html#part-install">6</a></span></li>
+        <li><b>Install the code</b> and write down every step you take.
+          <span class="sheet-ref">→ <a href="index.html#part-steps">part 7</a></span></li>
+        <li><b>Check what the authors recorded about their setup:</b> versions, CPU, memory, running times.
+          <span class="sheet-ref">→ <a href="index.html#part-setup">part 8</a></span></li>
+        <li><b>Run the tests and examples</b>, then try to reproduce the claims from step 2.
+          <span class="sheet-ref">→ <a href="index.html#part-running">parts 9</a> and <a href="index.html#part-correctness">10</a></span></li>
+        <li><b>Look at the readability</b> of the code: documentation of functions, comments, indentation, naming, structure.
+          <span class="sheet-ref">→ <a href="index.html#part-readability">part 11</a></span></li>
+        <li><b>Optionally, check the use of AI</b> (see <a href="#ai-authors">section 7</a>).
+          <span class="sheet-ref">→ <a href="index.html#part-ai">part 12</a></span></li>
+      </ol>
+    </section>
+
+    <section class="card prose" id="correctness">
+      <span class="section-num">Section 3</span>
+      <h2>What kind of correctness?</h2>
+      <p>Mathematics makes a sharp distinction between what is proven and what is merely very likely. Code can blur that line without anyone noticing.</p>
+
+      <h3 id="status">Status of the results</h3>
+      <p>Check what the paper claims about its results, and whether the code delivers that:</p>
+      <ul>
+        <li><b>Proven or certified:</b> every step is rigorous, using exact arithmetic or certified numerics (e.g. interval or ball arithmetic).</li>
+        <li><b>Conditional:</b> correct assuming a conjecture such as GRH.</li>
+        <li><b>Heuristic:</b> based on probabilistic algorithms or unproven bounds.</li>
+        <li><b>Numerical:</b> floating-point results, possibly with recognition of exact values.</li>
+      </ul>
+      <p>Common pitfalls:</p>
+      <ul>
+        <li><b>Shortcuts taken by default.</b> Computer algebra systems sometimes use heuristics unless asked otherwise.
+          PARI's <code>bnfinit</code>, for instance, is only unconditional after a call to <code>bnfcertify</code>, and a Sage script can switch proofs off globally with <code>proof.all(False)</code>.</li>
+        <li><b>Numerics.</b> Is the working precision tracked? If an algebraic number is recognised from a numerical approximation, is it verified exactly afterwards?</li>
+        <li><b>Randomness.</b> Is a randomised algorithm Las Vegas (always correct, random running time) or Monte Carlo (may be wrong with small probability)? Are seeds recorded so the run can be repeated?</li>
+        <li><b>Search bounds.</b> For exhaustive searches and enumerations, check that the bounds in the code match the bounds in the paper. Mismatches and off-by-one errors are a real source of mistakes, and easy to check.</li>
+      </ul>
+      <p>If the paper does not make the status clear, that is not necessarily a flaw in the code, but it is a good question to ask the authors.</p>
+
+      <h3 id="levels">Levels of reproduction</h3>
+      <p>Record how far you got. This lets editors and readers interpret the rest of the review:</p>
+      <ol class="levels">
+        <li><b>Not attempted</b>: e.g. no licence, or the code could not be installed.</li>
+        <li><b>Tests or small examples</b> ran successfully.</li>
+        <li><b>Examples from the paper</b> were reproduced.</li>
+        <li><b>The full computation</b> was rerun.</li>
+      </ol>
+      <p>Nobody expects you to rerun a computation that took months. In that case, smaller examples, test files, verification files, or a second implementation can still give confidence that the results are correct.</p>
+
+      <h3 id="formal">Formal proofs</h3>
+      <p>If the paper comes with a formalisation in a proof assistant (Lean, Coq, Isabelle, …), check that it contains no unfinished parts (such as Lean's <code>sorry</code>),
+      which axioms it relies on (<code>#print axioms</code> in Lean, <code>Print Assumptions</code> in Coq), and above all that the <b>formal statement says what the theorem in the paper says</b>.
+      A correct proof of the wrong statement is easy to miss.</p>
+    </section>
+
+    <section class="card prose" id="safety">
+      <span class="section-num">Section 4</span>
+      <h2>Running someone else's code safely</h2>
+      <p>You will be running code you did not write, often with installation scripts that download more code. Mistakes are far more likely than malice, but a little care costs little:</p>
+      <ul>
+        <li>Prefer a <b>container or virtual machine</b> (Docker, a VM, or at least a separate user account) over your everyday environment.</li>
+        <li>Read installation scripts before running them, especially anything that uses <code>sudo</code> or pipes a download straight into a shell.</li>
+        <li>Keep credentials (SSH keys, tokens, cloud accounts) out of reach of the code.</li>
+        <li>On shared machines, check how much memory and time a computation needs before starting it.</li>
+      </ul>
+    </section>
+
+    <section class="card prose" id="writing">
+      <span class="section-num">Section 5</span>
+      <h2>Writing up the review</h2>
+      <ul>
+        <li><b>Be specific and reproducible.</b> Give the exact commands you ran, the versions you used, and the full error message, not "it crashed".</li>
+        <li><b>Separate what must be fixed from suggestions.</b> Use the <span class="mk mk-minus" aria-hidden="true"></span> for things that need attention,
+          and say in the comments which problems you consider essential for publication.</li>
+        <li><b>Mention what is good.</b> Authors put real effort into their code, and knowing what works is useful feedback too.</li>
+        <li><b>Report any changes you made.</b> If you edited a file or a dependency to get things running, say exactly what you changed.</li>
+        <li><b>Be prepared for a second round.</b> Many authors improve their code after a review. A short follow-up check of the accepted version is quick and very worthwhile.</li>
+      </ul>
+    </section>
+
+    <section class="card prose" id="ai-reviewers">
+      <span class="section-num">Section 6</span>
+      <h2>Using AI as a reviewer</h2>
+      <p>AI assistants can make software reviews much easier, in particular when the code is written in a language you are less familiar with.
+      They do not change who is responsible for the review: you are.</p>
+
+      <div class="callout callout-warn">
+        <p><b>Confidentiality first.</b> Uploading an unpublished manuscript, or a private repository, to an external AI service may break the confidentiality rules of the journal or conference.
+        Check the policy before you do so. Public repositories and arXiv preprints are less of a concern, but the review itself is still confidential.</p>
+      </div>
+
+      <div class="do-dont">
+        <div>
+          <h3><svg class="mk" viewBox="0 0 10 10" aria-hidden="true"><path d="M0 5h10M5 0v10" stroke="#045BA7" stroke-width="2.6"/></svg>Good uses</h3>
+          <ul>
+            <li>Understanding code in an unfamiliar language.</li>
+            <li>Interpreting error messages and troubleshooting the installation.</li>
+            <li>Getting an overview of a large repository.</li>
+            <li>Drafting extra tests or independent verification scripts, which you then check yourself.</li>
+            <li>Polishing the wording of your review.</li>
+          </ul>
+        </div>
+        <div>
+          <h3><svg class="mk" viewBox="0 0 10 10" aria-hidden="true"><path d="M0 5h10" stroke="#D06631" stroke-width="2.6"/></svg>Be careful with</h3>
+          <ul>
+            <li>Reporting problems the AI found that you have not reproduced yourself. Invented bugs cost authors a lot of time.</li>
+            <li>Coding agents that keep patching the code until it runs. "It runs" and "it runs after these changes" are very different results.</li>
+            <li>Installation steps that only "the assistant figured out". Write down steps a person can repeat.</li>
+            <li>Agents running untrusted code with access to your files or credentials (see <a href="#safety">section 4</a>).</li>
+            <li>Letting the AI judge whether the mathematics is correct.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Disclose what you used</h3>
+      <p>A single sentence in the review is enough, for example <i>"I used an AI assistant to help read the C code and to interpret error messages."</i>
+      The review sheet has a field for this (<a href="index.html#part-ai">part 12</a>).</p>
+    </section>
+
+    <section class="card prose" id="ai-authors">
+      <span class="section-num">Section 7</span>
+      <h2>AI use by the authors</h2>
+      <p>Using AI to write code, or even to find mathematical results, is not a problem in itself. As with any other tool, readers need to know it was used,
+      and the output needs to be checked. Checking this is optional, but worthwhile:</p>
+      <h3>Disclosure</h3>
+      <p>Do the paper or the repository say where AI was used: for code, documentation, tests, or to produce results?
+      Many journals and conferences now have a policy on this. A missing statement does not prove anything; if something is unclear, ask the authors rather than speculate.</p>
+      <h3>Verification</h3>
+      <ul>
+        <li><b>Polish is not evidence.</b> Clean code with good comments used to be a decent sign of careful work. AI-generated code often looks clean while being subtly wrong,
+          so give more weight to tests, verification files and independent checks.</li>
+        <li><b>Mismatches.</b> Look out for documentation that does not describe what the code actually does, and calls to functions that do not exist in the stated version of the software.</li>
+        <li><b>AI-generated results.</b> If AI was used to produce results, for instance to search for examples or counterexamples, the model, its version and the prompts should be recorded.
+          Most importantly, the results should come with something that can be checked <b>independently of the AI</b>, such as a certificate or a verification script.</li>
+      </ul>
+      <p>The authors remain fully responsible for their code and results, however they were produced.</p>
+    </section>
+
+    <section class="card prose">
+      <h2>Ready to start?</h2>
+      <p>The review sheet walks you through all of the above, with guidance for every field.</p>
+      <p style="margin:0"><a class="btn btn-primary" href="index.html" style="text-decoration:none">Open the review sheet</a></p>
+    </section>
+  </main>
+</div>
+<footer class="site-footer">
+  <p>Made by Jeroen Hanselman as part of <a href="https://www.mardi4nfdi.de" target="_blank" rel="noopener">MaRDI</a> (Mathematical Research Data Initiative).
+  Based on the <a href="https://github.com/JHanselman/code-review-template" target="_blank" rel="noopener">code review template</a>
+  and the article <a href="https://doi.org/10.1090/noti3210" target="_blank" rel="noopener"><i>Guidelines for Writing and Reviewing Mathematical Software</i></a>.</p>
+</footer>
+</body>
+</html>

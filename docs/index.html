@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="review.css">
   <script>
     window.MathJax = {
@@ -23,8 +24,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a class="home-link" href="index.html" title="Software review sheet">
-      <img src="mardi-mark.png" alt="" class="topbar-logo">
-      <span class="home-text"><span class="home-sub">Software review sheet</span></span>
+      <img src="software-reviewing-logo.png" alt="Software Reviewing" class="topbar-logo-full" width="800" height="355">
+      <span class="home-divider" aria-hidden="true"></span>
+      <span class="home-sub">Review sheet</span>
     </a>
 
     <div class="view-switch" role="tablist" aria-label="View">
@@ -70,8 +72,16 @@
     <!-- ================= EDITOR ================= -->
     <div id="editor" role="tabpanel" aria-labelledby="tab-edit">
       <section class="intro card">
-        <h1>Write a software review</h1>
-        <p class="lede">A guided version of the <a href="https://github.com/JHanselman/code-review-template" target="_blank" rel="noopener">MaRDI code review template</a> for reviewing the software that comes with a mathematical paper. No LaTeX needed.</p>
+        <div class="intro-head">
+          <div>
+            <h1>Write a software review</h1>
+            <p class="lede">A guided version of the <a href="https://github.com/JHanselman/code-review-template" target="_blank" rel="noopener">MaRDI code review template</a> for reviewing the software that comes with a mathematical paper. No LaTeX needed.</p>
+          </div>
+          <a class="intro-mardi" href="https://www.mardi4nfdi.de" target="_blank" rel="noopener" title="MaRDI – Mathematical Research Data Initiative">
+            <img src="mardi-logo.png" alt="MaRDI – Mathematical Research Data Initiative" width="642" height="255">
+            <span>Mathematical Research<br>Data Initiative</span>
+          </a>
+        </div>
         <ol class="howto">
           <li><b>Fill in the parts below.</b> Click any <span class="knowl-demo">dotted label</span> to see what the guidelines say about it.</li>
           <li><b>Your work is kept in this browser</b> automatically. Use <i>File&nbsp;→ Save</i> to keep a copy or move it to another computer.</li>
@@ -112,7 +122,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <footer class="site-footer">
-  <p>Made by Jeroen Hanselman as part of <a href="https://www.mardi4nfdi.de" target="_blank" rel="noopener">MaRDI</a> (Mathematical Research Data Initiative).
+  <p><img src="mardi-mark.png" alt="MaRDI" class="footer-logo">Made by Jeroen Hanselman as part of <a href="https://www.mardi4nfdi.de" target="_blank" rel="noopener">MaRDI</a> (Mathematical Research Data Initiative).
   Based on the <a href="https://github.com/JHanselman/code-review-template" target="_blank" rel="noopener">code review template</a>
   and the article <a href="https://doi.org/10.1090/noti3210" target="_blank" rel="noopener"><i>Guidelines for Writing and Reviewing Mathematical Software</i></a>.</p>
 </footer>

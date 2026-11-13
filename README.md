@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/software-reviewing-logo.png" alt="Software Reviewing logo" width="360"></p>
+
 # Software Review Sheet
 
 An interactive, browser-based sheet for reviewing the software that accompanies a mathematical paper.
@@ -51,13 +53,16 @@ Without them the page falls back to system fonts and shows maths unrendered.
 
 ```
 docs/
-  index.html      the review sheet
-  guide.html      "How to perform a software review"
-  review.js       form logic, preview/PDF rendering, LaTeX export, save/load
-  knowls.js       texts of the knowls (guidance boxes)
-  review.css      styles, including the print layout used for the PDF
-  mardi.png       logo used in the review header (and in the LaTeX export)
-  mardi-mark.png  cropped logo for the page header
+  index.html                   the review sheet
+  guide.html                   "How to perform a software review"
+  review.js                    form logic, preview/PDF rendering, LaTeX export, save/load
+  knowls.js                    texts of the knowls (guidance boxes)
+  review.css                   styles, including the print layout used for the PDF
+  mardi.png                    MaRDI logo used in the review header (and in the LaTeX export)
+  mardi-logo.png               MaRDI logo in the introduction of both pages
+  mardi-mark.png               small MaRDI logo for the page footer
+  software-reviewing-logo.png  Software Reviewing logo (page header and this README)
+  favicon.png                  browser-tab icon (the rabbit from the logo)
 ```
 
 ### Editing the content

@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="review.css">
 </head>
 <body>
@@ -20,8 +21,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a class="home-link" href="index.html" title="Software review sheet">
-      <img src="mardi-mark.png" alt="" class="topbar-logo">
-      <span class="home-text"><span class="home-sub">How to perform a software review</span></span>
+      <img src="software-reviewing-logo.png" alt="Software Reviewing" class="topbar-logo-full" width="800" height="355">
+      <span class="home-divider" aria-hidden="true"></span>
+      <span class="home-sub">Guide</span>
     </a>
     <div class="actions" style="margin-left:auto">
       <a class="btn btn-primary" href="index.html">Open the review sheet</a>
@@ -54,7 +56,13 @@
   <main class="main">
 
     <section class="card prose">
-      <h1>How to perform a software review</h1>
+      <div class="intro-head">
+        <h1>How to perform a software review</h1>
+        <a class="intro-mardi" href="https://www.mardi4nfdi.de" target="_blank" rel="noopener" title="MaRDI – Mathematical Research Data Initiative">
+          <img src="mardi-logo.png" alt="MaRDI – Mathematical Research Data Initiative" width="642" height="255">
+          <span>Mathematical Research<br>Data Initiative</span>
+        </a>
+      </div>
       <p>Many mathematical papers now rely on code: to compute examples, to build databases, or as part of a proof.
       A software review checks that this code can be found, installed and run, and that it supports what the paper claims.
       This page is a practical companion to the <a href="index.html">review sheet</a> and to the article
@@ -239,7 +247,7 @@
   </main>
 </div>
 <footer class="site-footer">
-  <p>Made by Jeroen Hanselman as part of <a href="https://www.mardi4nfdi.de" target="_blank" rel="noopener">MaRDI</a> (Mathematical Research Data Initiative).
+  <p><img src="mardi-mark.png" alt="MaRDI" class="footer-logo">Made by Jeroen Hanselman as part of <a href="https://www.mardi4nfdi.de" target="_blank" rel="noopener">MaRDI</a> (Mathematical Research Data Initiative).
   Based on the <a href="https://github.com/JHanselman/code-review-template" target="_blank" rel="noopener">code review template</a>
   and the article <a href="https://doi.org/10.1090/noti3210" target="_blank" rel="noopener"><i>Guidelines for Writing and Reviewing Mathematical Software</i></a>.</p>
 </footer>
